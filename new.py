@@ -867,7 +867,7 @@ if __name__ == '__main__':
             os.makedirs(app.config['GENERATED_FILE_DIR'], exist_ok=True)
             print(f"File storage directory: {app.config['GENERATED_FILE_DIR']}")
             print("Starting Flask development server...")
-            app.run(debug=True, host='127.0.0.1', port=5000)
+            app.run(debug=True, host='0.0.0.0', port=5000)
         except Exception as e:
             print(f"Failed to start Flask app: {e}")
             import traceback
