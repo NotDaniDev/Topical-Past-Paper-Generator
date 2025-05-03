@@ -55,13 +55,13 @@ SUBJECT_NAMES = {
 ALL_KEYWORD_MAPS = {
     "9231": {
         "roots": "Polynomial Roots", "cubic equation": "Polynomial Roots", "sum of roots": "Polynomial Roots", "product of roots": "Polynomial Roots",
-        "vector": "Vectors", "plane": "Vectors", "line": "Vectors", "intersection": "Vectors", "perpendicular distance": "Vectors", "scalar product": "Vectors",
+        "vector": "Vectors", "plane": "Vectors", "intersection": "Vectors", "perpendicular distance": "Vectors", "scalar product": "Vectors",
         "mathematical induction": "Mathematical Induction", "induction": "Mathematical Induction",
         "matrix": "Matrices", "matrices": "Matrices", "inverse of a": "Matrices", "invariant line": "Matrices", "transformation": "Matrices", "enlargement": "Matrices", "shear": "Matrices",
         "method of differences": "Series Summation", "summation": "Series Summation", "series": "Series Summation",
         "polar equation": "Polar Coordinates", "polar coordinates": "Polar Coordinates",
         "asymptotes": "Curve Sketching", "sketch": "Curve Sketching", "stationary points": "Curve Sketching",
-        "Cartesian equation":"Polar Coordinates","initial line":"Polar Coordinates","pole": "Polar Coordinates",
+        "Cartesian equation":"Polar Coordinates","initial line":"Polar Coordinates","pole": "Polar Coordinates","convergent":"Series Summation","standard results":"Series Summation",
         "elastic string": "Hooke's Law",
         "elastic spring": "Hooke's Law",
         "modulus of elasticity": "Hooke's Law",
@@ -867,7 +867,7 @@ if __name__ == '__main__':
             os.makedirs(app.config['GENERATED_FILE_DIR'], exist_ok=True)
             print(f"File storage directory: {app.config['GENERATED_FILE_DIR']}")
             print("Starting Flask development server...")
-            app.run(debug=True, host='0.0.0.0', port=5000)
+            app.run(debug=True, host='127.0.0.1', port=5000)
         except Exception as e:
             print(f"Failed to start Flask app: {e}")
             import traceback
