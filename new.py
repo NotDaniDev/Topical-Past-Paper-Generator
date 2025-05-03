@@ -55,7 +55,7 @@ SUBJECT_NAMES = {
 ALL_KEYWORD_MAPS = {
     "9231": {
         "roots": "Polynomial Roots", "cubic equation": "Polynomial Roots", "sum of roots": "Polynomial Roots", "product of roots": "Polynomial Roots",
-        "vector": "Vectors", "plane": "Vectors", "intersection": "Vectors", "perpendicular distance": "Vectors", "scalar product": "Vectors",
+        "vector": "Vectors", "plane": "Vectors", "perpendicular distance": "Vectors", "scalar product": "Vectors",
         "mathematical induction": "Mathematical Induction", "induction": "Mathematical Induction",
         "matrix": "Matrices", "matrices": "Matrices", "inverse of a": "Matrices", "invariant line": "Matrices", "transformation": "Matrices", "enlargement": "Matrices", "shear": "Matrices",
         "method of differences": "Series Summation", "summation": "Series Summation", "series": "Series Summation",
