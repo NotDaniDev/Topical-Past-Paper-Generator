@@ -1,159 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Status</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            padding-top: 4rem;
-        }
-        .container {
-            max-width: 760px;
-            margin-bottom: 2rem;
-        }
-        .progress {
-            margin-bottom: 1rem;
-        }
-        .error-list {
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 1rem;
-        }
-        .file-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .file-list li {
-            margin-bottom: 0.5rem;
-        }
-        .btn {
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .btn:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-        .navbar {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .bg-light {
-            background-color: #f8f9fa !important;
-            border-radius: 5px;
-            padding: 20px;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .animate-btn { transition: all 0.2s ease; }
+        .animate-btn:hover { transform: scale(1.05); }
+        .error-list { max-height: 200px; overflow-y: auto; }
     </style>
     {% if status.status not in ['Completed', 'Error'] %}
-    <meta http-equiv="refresh" content="5"> <!-- Refresh page every 5 seconds if still processing -->
+    <meta http-equiv="refresh" content="5">
     {% endif %}
 </head>
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">ManGawd Past Paper Tool</a>
+<body class="bg-gray-100">
+    <nav class="bg-gray-800 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <a href="/" class="text-xl font-bold">ManGawd Past Paper Tool</a>
         </div>
     </nav>
 
-    <main class="container">
-        <div class="bg-light p-5 rounded">
-            <h1>Task Status: {{ task_id }}</h1>
+    <main class="container mx-auto max-w-2xl mt-8 px-4">
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Task Status: {{ task_id }}</h1>
 
-            <div class="mb-3">
-                <strong>Status:</strong>
-                <span class="badge
-                    {% if status.status == 'Completed' %} bg-success
-                    {% elif status.status == 'Error' %} bg-danger
-                    {% elif status.status == 'Processing' %} bg-info text-dark
-                    {% else %} bg-secondary
+            <div class="mb-4">
+                <span class="font-semibold">Status:</span>
+                <span class="inline-block px-2 py-1 rounded text-sm
+                    {% if status.status == 'Completed' %} bg-green-100 text-green-800
+                    {% elif status.status == 'Error' %} bg-red-100 text-red-800
+                    {% elif status.status == 'Processing' %} bg-blue-100 text-blue-800
+                    {% else %} bg-gray-100 text-gray-800
                     {% endif %}">
                     {{ status.status }}
                 </span>
             </div>
 
             {% if status.status not in ['Completed', 'Error'] %}
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                   {{ status.progress | default('Initializing...') }}
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-2">
+                    <div class="bg-blue-600 h-4 rounded-full animate-pulse" style="width: 100%"></div>
                 </div>
-            </div>
-             <p><small>{{ status.progress | default('Waiting for progress update...') }}</small></p>
-             <p>This page will automatically refresh every 5 seconds.</p>
+                <p class="text-sm text-gray-600">{{ status.progress | default('Initializing...') }}</p>
+                <p class="text-sm text-gray-500 mt-1">Refreshing every 5 seconds...</p>
             {% else %}
-             <p><strong>Final Progress:</strong> {{ status.progress | default('N/A') }}</p>
+                <p class="text-sm"><span class="font-semibold">Progress:</span> {{ status.progress | default('N/A') }}</p>
             {% endif %}
 
             {% if status.errors %}
-            <div class="alert alert-warning" role="alert">
-              Encountered {{ status.errors | length }} non-critical error(s)/warning(s):
-            </div>
-            <div class="error-list mb-3">
-                <ul>
-                    {% for error in status.errors %}
-                    <li><small>{{ error }}</small></li>
-                    {% endfor %}
-                </ul>
-            </div>
+                <div class="bg-yellow-100 border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+                    Encountered {{ status.errors | length }} warning(s):
+                </div>
+                <div class="error-list bg-red-50 border border-red-200 p-3 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        {% for error in status.errors %}
+                            <li class="text-sm text-red-600">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
 
             {% if status.status == 'Completed' or (status.status == 'Processing' and status.files) %}
-            <h2>Generated Files:</h2>
-            {% if not status.files.get('merged_qp') and not status.files.get('merged_ms') and not status.files.get('topical') %}
-                 <p>No files were generated successfully. Check errors above.</p>
-            {% else %}
-                <ul class="file-list">
-            {% if status.files.get('qp') %}
-            <li>
-                <a href="{{ url_for('download_file', task_id=task_id, file_key='merged_qp') }}" class="btn btn-success btn-sm">
-                    Download Merged QP ({{ status.files.qp.filename }})
-                </a>
-            </li>
-            {% endif %}
-             {% if status.files.get('ms') %}
-            <li>
-                <a href="{{ url_for('download_file', task_id=task_id, file_key='merged_ms') }}" class="btn btn-success btn-sm">
-                    Download Merged MS ({{ status.files.ms.filename }})
-                </a>
-            </li>
-            {% endif %}
+                <h2 class="text-xl font-semibold mb-3">Generated Files</h2>
+                {% if not status.files.get('qp') and not status.files.get('ms') and not status.files.get('topical') %}
+                    <p class="text-gray-600">No files generated. Check errors above.</p>
+                {% else %}
+                    <ul class="space-y-2">
+                        {% if status.files.get('qp') %}
+                            <li><a href="{{ url_for('download_file', task_id=task_id, file_key='merged_qp') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 animate-btn">Download Merged QP ({{ status.files.qp.filename }})</a></li>
+                        {% endif %}
+                        {% if status.files.get('ms') %}
+                            <li><a href="{{ url_for('download_file', task_id=task_id, file_key='merged_ms') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 animate-btn">Download Merged MS ({{ status.files.ms.filename }})</a></li>
+                        {% endif %}
+                        {% if status.files.get('topical') %}
+                            <li class="font-semibold">Topical Papers:</li>
+                            {% for file_info in status.files.topical %}
+                                <li class="ml-4"><a href="{{ url_for('download_file', task_id=task_id, file_key='topical_' + loop.index0|string) }}" class="inline-block border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-50 animate-btn">Download {{ file_info.topic }} ({{ file_info.filename }})</a></li>
+                            {% endfor %}
+                        {% elif status.status == 'Completed' and status.params.topical %}
+                            <li class="text-gray-600 italic">No topical files generated (check errors).</li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
 
-                    {% if status.files.get('topical') %}
-                        <li><strong>Topical Papers:</strong></li>
-                        {% for file_info in status.files.topical %}
-                        <li style="margin-left: 20px;">
-                            <a href="{{ url_for('download_file', task_id=task_id, file_key='topical_' + loop.index0|string) }}" class="btn btn-outline-primary btn-sm">
-                                Download {{ file_info.topic }} ({{ file_info.filename }})
-                            </a>
-                        </li>
-                        {% endfor %}
-                     {% elif status.status == 'Completed' and 'generate_topical' in request.args %}
-                          <li><i>Topical paper generation was requested but no files were created (check errors or subject).</i></li>
-                     {% endif %}
-                </ul>
-            {% endif %}
-
-            <form action="{{ url_for('cleanup_task', task_id=task_id) }}" method="POST" style="margin-top: 2rem;">
-                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete the generated files for this task?');">Delete Generated Files</button>
-                 <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">Generate New Set</a>
-            </form>
-
+                <div class="mt-6 flex space-x-4">
+                    <form action="{{ url_for('cleanup_task', task_id=task_id) }}" method="POST">
+                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 animate-btn" onclick="return confirm('Delete generated files?');">Delete Files</button>
+                    </form>
+                    <a href="{{ url_for('index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 animate-btn">Generate New Set</a>
+                </div>
             {% elif status.status == 'Error' %}
-             <div class="alert alert-danger" role="alert">
-              The task failed critically. Please check the errors above and try again.
-            </div>
-             <a href="{{ url_for('index') }}" class="btn btn-primary">Try Again</a>
+                <div class="bg-red-100 border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    Task failed. Check errors and try again.
+                </div>
+                <a href="{{ url_for('index') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 animate-btn">Try Again</a>
             {% endif %}
-
         </div>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
