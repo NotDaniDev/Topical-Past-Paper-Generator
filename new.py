@@ -33,23 +33,10 @@ os.makedirs(app.config['GENERATED_FILE_DIR'], exist_ok=True)
 tasks_status = {}
 
 SUBJECT_NAMES = {
-    "9700": "biology",
     "9701": "chemistry",
-    "9702": "physics",
-    "9709": "mathematics",
     "9231": "mathematics-further",
     "9618": "computer-science",
     "9608": "computer-science",
-    "9626": "information-technology",
-    "9084": "law",
-    "9189": "history",
-    "9990": "psychology",
-    "9699": "sociology",
-    "9696": "geography",
-    "9093": "english-language",
-    "9695": "english-literature",
-    "9708": "economics",
-    "9609": "business",
 }
 
 ALL_KEYWORD_MAPS = {
@@ -58,7 +45,7 @@ ALL_KEYWORD_MAPS = {
         "vector": "Vectors", "plane": "Vectors", "perpendicular distance": "Vectors", "scalar product": "Vectors",
         "mathematical induction": "Mathematical Induction", "induction": "Mathematical Induction",
         "matrix": "Matrices", "matrices": "Matrices", "inverse of a": "Matrices", "invariant line": "Matrices", "transformation": "Matrices", "enlargement": "Matrices", "shear": "Matrices",
-        "method of differences": "Series Summation", "summation": "Series Summation", "series": "Series Summation",
+        "method of differences": "Series Summation", "summation": "Series Summation", "series": "Series Summation","Show that": "Series Summation","Sn": "Series Summation",
         "polar equation": "Polar Coordinates", "polar coordinates": "Polar Coordinates",
         "asymptotes": "Curve Sketching", "sketch": "Curve Sketching", "stationary points": "Curve Sketching",
         "Cartesian equation":"Polar Coordinates","initial line":"Polar Coordinates","pole": "Polar Coordinates","convergent":"Series Summation","standard results":"Series Summation",
