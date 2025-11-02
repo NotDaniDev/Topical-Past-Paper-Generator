@@ -859,3 +859,9 @@ if __name__ == '__main__':
             print(f"Failed to start Flask app: {e}")
             import traceback
             traceback.print_exc()
+
+
+            @app.route("/status_api/<task_id>")
+            def status_api(task_id):
+                status = tasks_status.get(task_id, {"status": "Unknown", "progress": "N/A", "files": {}})
+                return jsonify(status)
